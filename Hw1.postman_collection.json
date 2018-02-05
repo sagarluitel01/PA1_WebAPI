@@ -1,0 +1,90 @@
+{
+	"info": {
+		"name": "Hw1",
+		"_postman_id": "5ba2429f-9b90-9b3e-356d-58a593e459eb",
+		"description": "Rest Request\n",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Books",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6a9bc3f3-570f-44a3-b759-c631d355acba",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"book_titke\", \"Turing\");"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "0bf2dcbf-c8e0-4ad4-a3a2-677a6d88a62c",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"var title = jsonData.items[0].volumeInfo.title;",
+							"var id = jsonData.items[0].id;",
+							"postman.setEnvironmentVariable(\"id\", id);",
+							"",
+							"var patt = /Turing/i;",
+							"",
+							"var res = patt.test(title);",
+							"",
+							"tests[\"Titles are Turing\"] = (res === true);",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://www.googleapis.com/books/v1/volumes?q={{Turing}}",
+					"protocol": "https",
+					"host": [
+						"www",
+						"googleapis",
+						"com"
+					],
+					"path": [
+						"books",
+						"v1",
+						"volumes"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "{{Turing}}\n",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Volumes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
