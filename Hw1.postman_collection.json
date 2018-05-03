@@ -1,7 +1,7 @@
 {
 	"info": {
-		"name": "Hw1",
 		"_postman_id": "5ba2429f-9b90-9b3e-356d-58a593e459eb",
+		"name": "Hw1",
 		"description": "Rest Request\n",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -12,10 +12,10 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "6a9bc3f3-570f-44a3-b759-c631d355acba",
+						"id": "63da6ba5-082e-4627-919d-27a7d6d65463",
 						"type": "text/javascript",
 						"exec": [
-							"pm.environment.set(\"book_titke\", \"Turing\");"
+							""
 						]
 					}
 				},
@@ -49,7 +49,7 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "https://www.googleapis.com/books/v1/volumes?q={{Turing}}",
+					"raw": "https://www.googleapis.com/books/v1/volumes?q={{book_title}}\n",
 					"protocol": "https",
 					"host": [
 						"www",
@@ -64,25 +64,67 @@
 					"query": [
 						{
 							"key": "q",
-							"value": "{{Turing}}\n",
-							"equals": true
+							"value": "{{book_title}}\n"
 						}
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "Volumes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "55b2f6ec-e76f-42e8-b11a-8907c4ef255e",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"tests['same id'] = (responseBody.has(pm.environment.get(\"id\")));",
+							"",
+							""
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7b5ed433-5e45-4f9d-97d0-386652009177",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "",
+						"value": ""
+					}
+				],
 				"body": {},
 				"url": {
-					"raw": ""
-				},
-				"description": ""
+					"raw": "https://www.googleapis.com/books/v1/volumes/{{id}}",
+					"protocol": "https",
+					"host": [
+						"www",
+						"googleapis",
+						"com"
+					],
+					"path": [
+						"books",
+						"v1",
+						"volumes",
+						"{{id}}"
+					]
+				}
 			},
 			"response": []
 		}
